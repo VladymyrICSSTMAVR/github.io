@@ -7,49 +7,58 @@
 
 <title>Simple Ticket</title>
 <style>
+  /* Основной фон страницы */
   body {
     margin: 0;
     padding: 0;
-    background: #000;
+    background: #fff; /* белый фон */
   }
+
   .container {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
   }
+
+  /* Картинка-фон */
   .bg {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* растягивает и обрезает картинку, чтобы заполнить экран */
     position: absolute;
-    top: 0; left: 0;
+    top: 0; 
+    left: 0;
     z-index: 1;
+    background-color: #fff; /* если картинка не полностью закрывает — будет белый фон */
   }
+
+  /* Часы */
   .time-display {
     position: absolute;
-    top: 73px;
+    top: 10vmin;          /* отступ сверху адаптивный */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 30px;
+    font-size: 5vmin;     /* шрифт масштабируется под экран */
     font-weight: bold;
     color: black;
-    background: rgba(200,255,200,1);
-    padding: 10px 49px;
-    border-radius: 10px;
+    background: rgba(200,255,200,0.9);
+    padding: 2vmin 5vmin;
+    border-radius: 2vmin;
     z-index: 2;
   }
 
+  /* QR-код */
   .qr {
     position: absolute;
-    width: 170px;
-    height: 170px;
-    left: 32px;
-    bottom: 178px;
-    background: white;
-    border-radius: 8px;
+    width: 20vmin;       /* адаптивный размер */
+    height: 20vmin;
+    left: 5vmin;
+    bottom: 15vmin;
+    background: white;   /* фон под QR-код */
+    border-radius: 2vmin;
     z-index: 2;
-    object-fit: cover;
+    object-fit: contain; /* QR-код не обрезается */
   }
 </style>
 </head>
@@ -73,16 +82,19 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ---- Смена 2 QR-кодов ----
+// Смена QR-кодов
 const qrImages = ["qr1.png", "qr2.png"];
 let index = 0;
 
 setInterval(() => {
   index = (index + 1) % qrImages.length;
-  document.getElementById("qrImage").src = qrImages[index];
-}, 2000); // каждые 3 секунды
+  const qr = document.getElementById("qrImage");
+  qr.style.opacity = 0; // плавное исчезновение
+  setTimeout(() => {
+    qr.src = qrImages[index];
+    qr.style.opacity = 1;
+  }, 300);
+}, 3000);
 </script>
-
 </body>
 </html>
-

@@ -22,16 +22,16 @@
   }
 
   /* Картинка-фон */
-  .bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* растягивает и обрезает картинку, чтобы заполнить экран */
-    position: absolute;
-    top: 0; 
-    left: 0;
-    z-index: 1;
-    background-color: #fff; /* если картинка не полностью закрывает — будет белый фон */
-  }
+.bg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* картинка вписывается в контейнер */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent; /* не перекрываем белый фон */
+}
 
   /* Часы */
   .time-display {
@@ -98,4 +98,5 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 

@@ -15,10 +15,9 @@
     font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   }
 
-  /* ===== ОСНОВНОЙ ЭКРАН ===== */
   .container {
     position: relative;
-    width: 98vw;          /* ← 2% уже */
+    width: 98vw;       /* ~2% уже */
     height: 100vh;
     margin: 0 auto;
     overflow: hidden;
@@ -42,4 +41,106 @@
     font-size: 29px;
     font-weight: 500;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0
+    letter-spacing: 0.5px;
+    color: black;
+    padding: 9px 49px;
+    border-radius: 10px;
+    background: #c8ffc8; /* заменится из localStorage */
+    z-index: 2;
+  }
+
+  .qr {
+    position: absolute;
+    width: 167px;
+    height: 167px;
+    left: 20px;
+    bottom: 191px;
+    background: white;
+    border-radius: 8px;
+    z-index: 2;
+    object-fit: cover;
+  }
+
+  .controls {
+    height: 1200px;
+    background: white;
+    padding: 40px 20px;
+  }
+
+  .color-box {
+    margin-top: 600px;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  input[type="color"] {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    border: none;
+    padding: 0;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <img src="bg.jpg" class="bg">
+  <div id="clock" class="time-display">00:00:00</div>
+  <img id="qrImage" class="qr" src="qr1.png">
+</div>
+
+<div class="controls">
+  <div class="color-box">
+    <label>Цвет под временем:</label>
+    <input type="color" id="colorPicker">
+  </div>
+</div>
+
+<script>
+  /* ===== ЧАСЫ ===== */
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  /* ===== QR ===== */
+  const qrImages = ["qr1.png", "qr2.png"];
+  let index = 0;
+
+  setInterval(() => {
+    index = (index + 1) % qrImages.length;
+    document.getElementById("qrImage").src = qrImages[index];
+  }, 2000);
+
+  /* ===== COLOR + localStorage ===== */
+  const picker = document.getElementById("colorPicker");
+  const clock = document.getElementById("clock");
+
+  // загрузка сохранённого цвета
+  const savedColor = localStorage.getItem("timeBgColor");
+  if (savedColor) {
+    clock.style.background = savedColor;
+    picker.value = savedColor;
+  } else {
+    picker.value = "#c8ffc8";
+  }
+
+  // сохранение цвета
+  picker.addEventListener("input", () => {
+    clock.style.background = picker.value;
+    localStorage.setItem("timeBgColor", picker.value);
+  });
+</script>
+
+</body>
+</html>

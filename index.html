@@ -9,59 +9,65 @@
 <style>
 html, body {
   margin: 0;
-  background: #fff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 0;
+  background: #f0f0f0; /* Серый фон вокруг "телефона" */
+  display: flex;
+  justify-content: center;
 }
 
-/* ===== ОБЩАЯ СТРАНИЦА (СКРОЛЛ) ===== */
 .page {
   position: relative;
-  height: 300vh; /* 3 экрана */
+  width: 100vw;
+  max-width: 500px; /* Ограничиваем ширину для больших экранов */
+  height: 300vh;
+  background: #fff;
+  overflow-x: hidden;
 }
 
-/* ===== ФОН ===== */
+/* ФОН - теперь он занимает ширину контейнера */
 .bg {
   position: absolute;
-  top: 0.8%;
-  left: 2.5%;
-  width: 95%;
-  height: 95vh;
-  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto; /* Картинка сохранит пропорции */
   z-index: 0;
 }
 
-/* ===== ЧАСЫ ===== */
+/* ЧАСЫ - используем % для отступа сверху */
 .time {
   position: absolute;
-  top: 90.7px;
+  top: 12%; /* Привязка к высоте экрана в процентах */
   left: 50%;
   transform: translateX(-50%);
-  padding: 7.3px 50px;
-  border-radius: 5px;
-  font-size: 27px;
-  font-weight: 500;
+  padding: 1% 10%;
+  border-radius: 8px;
+  font-size: 1.8rem; /* Размер шрифта подстраивается */
+  font-weight: 600;
   background: #c8ffc8;
   color: #000;
-  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   z-index: 2;
 }
 
-/* ===== QR ===== */
+/* QR - привязываем через % от ширины и низ первого экрана */
 .qr {
   position: absolute;
-  width: 165px;
-  height: 165px;
-  left: 38px;
-  bottom: calc(200vh + 187px); /* на первом экране */
+  width: 40%; /* Размер QR зависит от ширины экрана */
+  max-width: 180px;
+  left: 10%; 
+  top: 58vh; /* Позиция на первом экране */
   z-index: 2;
 }
 
-/* ===== COLOR PICKER (3 экран) ===== */
+/* COLOR PICKER */
 .picker {
   position: absolute;
   top: 250vh;
   left: 50%;
   transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
   z-index: 2;
 }
 </style>

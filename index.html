@@ -34,21 +34,34 @@ html, body {
   z-index: 0;
 }
 
-/* ЧАСЫ */
 .time {
   position: absolute;
-  /* Используем vw для вертикального отступа. 
-     Подберите число (сейчас 24.5), чтобы попасть точно в поле на картинке */
-  top: 24.5vw; 
+  top: 24.5vw; /* Позиция по высоте (подстройте под свой фон) */
   left: 50%;
   transform: translateX(-50%);
-  padding: 1.5vw 12vw; /* Паддинги тоже в vw для масштабируемости */
-  border-radius: 5px;
-  font-size: 6.5vw; /* Шрифт будет расти вместе с экраном */
-  font-weight: 500;
+
+  /* ФИКСИРУЕМ РАЗМЕР, ЧТОБЫ ФОН НЕ ПРЫГАЛ */
+  width: 65vw; /* Установите жесткую ширину */
+  text-align: center; /* Текст всегда по центру внутри блока */
+  
+  /* ШРИФТ И ЦИФРЫ */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 7vw; /* Размер шрифта */
+  
+  /* Заставляем цифры быть одинаковой ширины */
+  font-variant-numeric: tabular-nums;
+  -moz-font-feature-settings: "tnum";
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+
+  /* ВНЕШНИЙ ВИД ФОНА */
+  padding: 1.5vw 0; /* Только вертикальный паддинг, горизонтальный не нужен из-за ширины */
+  border-radius: 8px;
   background: #c8ffc8;
   color: #000;
   z-index: 2;
+  white-space: nowrap; /* Запрещаем перенос строк */
 }
 
 /* QR-КОД */

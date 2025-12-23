@@ -36,32 +36,35 @@ html, body {
 
 .time {
   position: absolute;
-  top: 24.5vw; /* Позиция по высоте (подстройте под свой фон) */
+  /* 1. Центрирование */
   left: 50%;
   transform: translateX(-50%);
 
-  /* ФИКСИРУЕМ РАЗМЕР, ЧТОБЫ ФОН НЕ ПРЫГАЛ */
-  width: 65vw; /* Установите жесткую ширину */
-  text-align: center; /* Текст всегда по центру внутри блока */
-  
-  /* ШРИФТ И ЦИФРЫ */
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 7vw; /* Размер шрифта */
-  
-  /* Заставляем цифры быть одинаковой ширины */
-  font-variant-numeric: tabular-nums;
-  -moz-font-feature-settings: "tnum";
-  -webkit-font-feature-settings: "tnum";
-  font-feature-settings: "tnum";
+  /* 2. Позиция по вертикали (подгоняйте это число под фон) */
+  top: 24.5vw; 
 
-  /* ВНЕШНИЙ ВИД ФОНА */
-  padding: 1.5vw 0; /* Только вертикальный паддинг, горизонтальный не нужен из-за ширины */
-  border-radius: 8px;
-  background: #c8ffc8;
+  /* 3. ФИКСИРОВАННЫЙ РАЗМЕР ФОНА (самое важное) */
+  /* Эти значения теперь не зависят от длины текста */
+  width: 60vw;   /* Ширина зеленого прямоугольника */
+  height: 12vw;  /* Высота зеленого прямоугольника */
+  
+  /* 4. Центрирование текста внутри прямоугольника */
+  display: flex;
+  align-items: center;    /* Центр по вертикали */
+  justify-content: center; /* Центр по горизонтали */
+
+  /* 5. ШРИФТ */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 7.5vw; /* Размер цифр */
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+
+  /* 6. ДИЗАЙН */
+  background: #c8ffc8; /* Ваш цвет */
+  border-radius: 1.5vw; /* Скругление тоже в vw, чтобы было одинаковым */
   color: #000;
   z-index: 2;
-  white-space: nowrap; /* Запрещаем перенос строк */
 }
 
 /* QR-КОД */

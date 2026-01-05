@@ -6,20 +6,13 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
-
-<!-- iOS -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>Ticket</title>
 
 <style>
 html, body {
   margin: 0;
   padding: 0;
-  background: #f0f0f0; /* Серый фон вокруг "телефона" */
+  background: #f0f0f0;
   display: flex;
   justify-content: center;
 }
@@ -27,51 +20,40 @@ html, body {
 .page {
   position: relative;
   width: 100vw;
-  max-width: 500px; /* Ограничиваем ширину для больших экранов */
+  max-width: 500px;
   height: 300vh;
   background: #fff;
   overflow-x: hidden;
 }
 
-/* ФОН - теперь он занимает ширину контейнера */
+/* ФОН */
 .bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: auto; /* Картинка сохранит пропорции */
+  height: auto;
   z-index: 0;
 }
 
+/* ЧАСЫ */
 .time {
   position: absolute;
-  /* 1. Центрирование */
   left: 50%;
   transform: translateX(-50%);
-
-  /* 2. Позиция по вертикали (подгоняйте это число под фон) */
   top: 17.8vw; 
-
-  /* 3. ФИКСИРОВАННЫЙ РАЗМЕР ФОНА (самое важное) */
-  /* Эти значения теперь не зависят от длины текста */
-  width: 51.5vw;   /* Ширина зеленого прямоугольника */
-  height: 12.8vw;  /* Высота зеленого прямоугольника */
-  
-  /* 4. Центрирование текста внутри прямоугольника */
+  width: 51.5vw;
+  height: 12.8vw;
   display: flex;
-  align-items: center;    /* Центр по вертикали */
-  justify-content: center; /* Центр по горизонтали */
-
-  /* 5. ШРИФТ */
+  align-items: center;
+  justify-content: center;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  font-size: 7vw; /* Размер цифр */
+  font-size: 7vw;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
-
-  /* 6. ДИЗАЙН */
-  background: #c8ffc8; /* Ваш цвет */
-  border-radius: 1.5vw; /* Скругление тоже в vw, чтобы было одинаковым */
+  background: #c8ffc8;
+  border-radius: 1.5vw;
   color: #000;
   z-index: 2;
 }
@@ -79,12 +61,9 @@ html, body {
 /* QR-КОД */
 .qr {
   position: absolute;
-  /* Ширина в % или vw — это правильно */
   width: 42vw; 
   height: 42vw;
   left: 9.2vw; 
-  /* Главное исправление: используем vw вместо vh или px для высоты */
-  /* Подберите это значение (сейчас 145), чтобы QR стоял на месте */
   top: 124.5vw; 
   z-index: 2;
 }
@@ -98,6 +77,28 @@ html, body {
   width: 50px;
   height: 50px;
   z-index: 2;
+}
+
+/* CHECKBOX ДЛЯ ИКОНКИ ПОЛЬЗОВАТЕЛЯ */
+.user-toggle {
+  position: absolute;
+  top: 256vh; /* чуть ниже color picker */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  z-index: 2;
+}
+
+/* ИКОНКА ПОЛЬЗОВАТЕЛЯ */
+.user-icon {
+  position: absolute;
+  top: 17.7vw;
+  left: 9.2vw;
+  width: 11.3vw;
+  height: 11.3vw;
+  z-index: 3;
+  transition: opacity 0.2s ease;
 }
 </style>
 </head>
@@ -113,6 +114,13 @@ html, body {
   <img id="qr" class="qr" src="qr1.png">
 
   <input id="picker" class="picker" type="color" value="#c8ffc8">
+
+  <img id="userIcon" class="user-icon" src="user.png" title="Пользователь">
+
+  <label class="user-toggle">
+    <input type="checkbox" id="toggleUser" checked>
+    Показать пользователя
+  </label>
 
 </div>
 
@@ -141,6 +149,15 @@ setInterval(() => {
   qr.src = qrList[qrIndex];
 }, 2000);
 
+/* ===== ВКЛЮЧЕНИЕ/ВЫКЛЮЧЕНИЕ ИКОНКИ ПОЛЬЗОВАТЕЛЯ ===== */
+const userIcon = document.getElementById('userIcon');
+const toggleUser = document.getElementById('toggleUser');
+
+toggleUser.addEventListener('change', () => {
+  userIcon.style.display = toggleUser.checked ? 'block' : 'none';
+});
+
+/* ===== SERVICE WORKER ===== */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
